@@ -16,12 +16,13 @@ function createPromise(position, delay) {
 function onSubmit(event) {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
+  event.currentTarget.reset();
   const amount = Number(formData.get('amount'));
   const step = Number(formData.get('step'));
   const delay = Number(formData.get('delay'));
 
   for (let i = 0; i < amount; i += 1) {
-    createPromise(i, delay + step * i).then(({ position, delay }) => {
+    createPromise(i + 1, delay + step * i).then(({ position, delay }) => {
       iziToast.success({
         title: 'Success',
         message: `Promise ${position} resolved after ${delay}ms`,

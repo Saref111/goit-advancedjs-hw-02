@@ -32,6 +32,7 @@ flatpickr(input, options);
 
 function onStartButtonClick() {
     startButton.disabled = true;
+    input.disabled = true;
     const selectedDate = new Date(input.value);
     const currentDate = Date.now();
     const time = selectedDate - currentDate;
@@ -46,6 +47,7 @@ function startTimer(time) {
         updateClockface(timeLeft);
         time -= 1000;
         if (time < 0) {
+            input.disabled = false;
             clearInterval(timerId);
         }
     }, 1000);
@@ -57,7 +59,7 @@ function getTimeComponents(time) {
         Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)),
         Math.floor((time % (1000 * 60)) / 1000),
-    ];
+    ].map((t) => t.toString().padStart(2, '0'));
 }
 
 function updateClockface([days, hours, minutes, seconds]) {
